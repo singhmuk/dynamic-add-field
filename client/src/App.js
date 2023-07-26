@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
+import {BASE_URL} from "./helper";
 
 const formState = { id: 0, names: [] };
 
@@ -18,7 +19,7 @@ const App = () => {
   }, []);
 
   const fetchData = async () => {
-      const res = await axios.get('/api/items');
+      const res = await axios.get(`${BASE_URL}/api/items`);
       setMocks(res.data);
   };
 
@@ -33,13 +34,13 @@ const App = () => {
   };
 
   const handleAdd = async () => {
-      const res = await axios.post('/api/items', { names: user.names });
+      const res = await axios.post(`${BASE_URL}/api/items`, { names: user.names });
       setMocks([...mocks, res.data]);
       setUser({ ...user, names: [] });
   };
 
   const handleRemove = async (_id) => {
-      await axios.delete(`/api/items/${_id}`);
+      await axios.delete(`${BASE_URL}/api/items/${_id}`);
       setMocks(mocks.filter(item => item._id !== _id));
   };
 
